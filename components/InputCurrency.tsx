@@ -26,7 +26,8 @@ const InputCurrency: Component = (props: InputProps | any) => {
   }
 
   const numberToLocaleString = (number: number) => {
-    return addCurrency(number.toLocaleString('id-id'))
+    const fixed = Math.floor(number * 100) / 100
+    return addCurrency(fixed.toLocaleString('id-id'))
   }
 
   createEffect(() => {
