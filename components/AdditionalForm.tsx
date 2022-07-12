@@ -1,11 +1,28 @@
-import {Component, createSignal} from 'solid-js';
+import {Component, createEffect, createSignal, Setter} from 'solid-js';
 import {Box, FormControl, FormHelperText, FormLabel, SimpleGrid} from '@hope-ui/solid';
 import InputCurrency from './InputCurrency';
 import {inputCurrencyStyle} from '../styles/styles';
 
-const AdditionalForm: Component = (props) => {
+interface AdditionalProps {
+  onTaxChange: Setter<number>
+  onDeliveryChange: Setter<number>
+}
+
+const AdditionalForm: Component = (props: AdditionalProps) => {
   const [tax, setTax] = createSignal<number>(0)
   const [delivery, setDelivery] = createSignal<number>(0)
+
+  if (props.onTaxChange) {
+    createEffect(() => {
+      props.onTaxChange(tax())
+    })
+  }
+
+  if (props.onDeliveryChange) {
+    createEffect(() => {
+      props.onDeliveryChange(delivery())
+    })
+  }
 
   return (
     <>
@@ -17,7 +34,7 @@ const AdditionalForm: Component = (props) => {
               id="input-tax"
               class={inputCurrencyStyle()}
               onInput={setTax}
-              value={tax()}
+              value={tax}
             />
             <FormHelperText>
               Total biaya layanan seperti

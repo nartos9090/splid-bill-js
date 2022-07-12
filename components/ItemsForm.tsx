@@ -29,7 +29,7 @@ const ItemsForm: Component = (props: ItemsProps) => {
   const addNewItem = () => {
     const [name, setName] = createSignal<string>('')
     const [price, setPrice] = createSignal<number>(0)
-    const [amount, setAmount] = createSignal<number>(0)
+    const [amount, setAmount] = createSignal<number>(1)
     const [total, setTotal] = createSignal<number>(0)
     const [discount, setDiscount] = createSignal<number>(0)
     const [finalPrice, setFinalPrice] = createSignal<number>(0)

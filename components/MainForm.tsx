@@ -4,25 +4,33 @@ import {inputCurrencyStyle} from '../styles/styles';
 import InputCurrency from './InputCurrency';
 
 interface MainProps {
-  totalPrice: Accessor
+  totalPrice: Accessor,
 }
 
 const MainForm: Component = (props: MainProps) => {
   const [price, setPrice] = createSignal<number>(0, {equals: false})
   const [total, setTotal] = createSignal<number>(0, {equals: false})
   const [discount, setDiscount] = createSignal<number>(0)
+  const [percentage, setPercentage] = createSignal<number>(0)
+
+  const discountText = (text: string) => {
+    let valueDiscount = percentage()
+    if (!Number.isFinite(percentage())) {
+      valueDiscount = 100
+    } else if (isNaN(percentage())) {
+      valueDiscount = 0
+    }
+    return `${text} (${Math.floor(valueDiscount)}%)`
+  }
 
   createEffect(() => {
-    calcDiscount()
+    setDiscount(price() - total())
+    setPercentage(discount() / price() * 100)
   })
 
   createEffect(() => {
     setPrice(props.totalPrice?.())
   })
-
-  const calcDiscount = () => {
-    setDiscount(price() - total())
-  }
 
   return (
     <>
@@ -68,6 +76,7 @@ const MainForm: Component = (props: MainProps) => {
               onInput={setDiscount}
               value={discount}
               readonly
+              text={discountText}
             />
             <FormHelperText>
               <span style={{color: 'green'}}>Total diskon </span>

@@ -8,6 +8,7 @@ const addCurrency = (amount: number | string) => {
 interface InputProps {
   onInput: Function,
   value: Function,
+  text: Function,
 }
 
 const InputCurrency: Component = (props: InputProps | any) => {
@@ -35,7 +36,11 @@ const InputCurrency: Component = (props: InputProps | any) => {
   createEffect(() => {
     const parentValue = typeof props.value === 'function' ? props.value() : props.value
     setValue(parentValue)
-    setText(numberToLocaleString(parentValue))
+    let text = numberToLocaleString(parentValue)
+    if (props.text) {
+      text = props.text(text)
+    }
+    setText(text)
   })
 
   return (

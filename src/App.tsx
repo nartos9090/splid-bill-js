@@ -15,20 +15,23 @@ const App: Component = () => {
   const [totalPrice, setTotalPrice] = createSignal<number>(0)
   const [totalDiscount, setTotalDiscount] = createSignal<number>(0)
   const [totalFinalPrice, setTotalFinalPrice] = createSignal<number>(0)
+  const [tax, setTax] = createSignal<number>(0)
+  const [delivery, setDelivery] = createSignal<number>(0)
 
-  const setTotal = (items: Item[]) => {
+  const calculateTotal = (items: Item[]) => {
     setTotalAmount(items.reduce((prev, item) => prev + item.amount(), 0))
-    setTotalPrice(items.reduce((prev, item) => prev + item.total(), 0))
+    setTotalPrice(items.reduce((prev, item) => prev + item.total(), 0) + tax() + delivery())
     setTotalDiscount(items.reduce((prev, item) => prev + item.discount(), 0))
     setTotalFinalPrice(items.reduce((prev, item) => prev + item.finalPrice(), 0))
+    console.log(totalPrice())
   }
 
   return (
     <>
       <Container>
-        <ItemsForm onChange={setTotal} />
+        <ItemsForm onChange={calculateTotal} />
+        <AdditionalForm onTaxChange={setTax} onDeliveryChange={setDelivery} />
         <MainForm totalPrice={totalPrice} />
-        <AdditionalForm />
       </Container>
     </>
   );
