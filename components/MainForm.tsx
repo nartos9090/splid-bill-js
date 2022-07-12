@@ -5,13 +5,17 @@ import InputCurrency from './InputCurrency';
 
 interface MainProps {
   totalPrice: Accessor,
+  onPercentageChange: Function,
 }
 
+const [price, setPrice] = createSignal<number>(0, {equals: false})
+const [total, setTotal] = createSignal<number>(0, {equals: false})
+const [discount, setDiscount] = createSignal<number>(0)
+const [percentage, setPercentage] = createSignal<number>(0)
+
+export { price, setPrice, percentage, discount}
+
 const MainForm: Component = (props: MainProps) => {
-  const [price, setPrice] = createSignal<number>(0, {equals: false})
-  const [total, setTotal] = createSignal<number>(0, {equals: false})
-  const [discount, setDiscount] = createSignal<number>(0)
-  const [percentage, setPercentage] = createSignal<number>(0)
 
   const discountText = (text: string) => {
     let valueDiscount = percentage()
@@ -26,7 +30,12 @@ const MainForm: Component = (props: MainProps) => {
   createEffect(() => {
     setDiscount(price() - total())
     setPercentage(discount() / price() * 100)
+    setParentPercentage()
   })
+
+  const setParentPercentage = () => {
+    props.onPercentageChange?.(percentage())
+  }
 
   createEffect(() => {
     setPrice(props.totalPrice?.())

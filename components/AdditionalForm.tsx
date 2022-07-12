@@ -8,22 +8,12 @@ interface AdditionalProps {
   onDeliveryChange: Setter<number>
 }
 
+const [tax, setTax] = createSignal<number>(0)
+const [delivery, setDelivery] = createSignal<number>(0)
+
+export {tax, delivery}
+
 const AdditionalForm: Component = (props: AdditionalProps) => {
-  const [tax, setTax] = createSignal<number>(0)
-  const [delivery, setDelivery] = createSignal<number>(0)
-
-  if (props.onTaxChange) {
-    createEffect(() => {
-      props.onTaxChange(tax())
-    })
-  }
-
-  if (props.onDeliveryChange) {
-    createEffect(() => {
-      props.onDeliveryChange(delivery())
-    })
-  }
-
   return (
     <>
       <SimpleGrid columns={{'@initial': 1, '@md': 3}} gap="40px">

@@ -13,6 +13,8 @@ export interface Item {
   setAmount: Setter<number>
   total: Accessor<number>
   setTotal: Setter<number>
+  totalWithAdditional: Accessor<number>,
+  setTotalWithAdditional: Setter<number>,
   discount: Accessor<number>
   setDiscount: Setter<number>
   finalPrice: Accessor<number>
@@ -23,14 +25,18 @@ interface ItemsProps {
   onChange: Function
 }
 
+const [totalPrice, setTotalPrice] = createSignal<number>(0)
+const [items, setItems] = createSignal<Item[]>([], {equals: false})
+export { totalPrice, items}
+
 const ItemsForm: Component = (props: ItemsProps) => {
-  const [items, setItems] = createSignal<Item[]>([], {equals: false})
 
   const addNewItem = () => {
     const [name, setName] = createSignal<string>('')
     const [price, setPrice] = createSignal<number>(0)
     const [amount, setAmount] = createSignal<number>(1)
     const [total, setTotal] = createSignal<number>(0)
+    const [totalWithAdditional, setTotalWithAdditional] = createSignal<number>(0)
     const [discount, setDiscount] = createSignal<number>(0)
     const [finalPrice, setFinalPrice] = createSignal<number>(0)
 
@@ -45,6 +51,8 @@ const ItemsForm: Component = (props: ItemsProps) => {
         setAmount,
         total,
         setTotal,
+        totalWithAdditional,
+        setTotalWithAdditional,
         discount,
         setDiscount,
         finalPrice,
@@ -54,13 +62,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
 
     createEffect(() => {
       setTotal(price() * amount())
-      props.onChange?.(items())
+      setTotalPrice(items().reduce((a, c: Item) => a + c.total(), 0))
     })
 
-    createEffect(() => {
-      setFinalPrice(total() - discount())
-      props.onChange?.(items())
-    })
+    // createEffect(() => {
+    //   setFinalPrice(total() - discount())
+    // })
   }
 
   addNewItem()
@@ -76,6 +83,7 @@ const ItemsForm: Component = (props: ItemsProps) => {
             <Th numeric>Harga</Th>
             <Th numeric>Jumlah</Th>
             <Th numeric>Total</Th>
+            <Th numeric>Total + Ongkir</Th>
             <Th numeric>Diskon</Th>
             <Th numeric>Harga Akhir</Th>
           </Tr>
@@ -136,6 +144,19 @@ const ItemsForm: Component = (props: ItemsProps) => {
                     type="text"
                     variant="unstyled"
                     value={item.total()}
+                    class={inputCurrencyStyle()}
+                    readonly
+                  />
+                </Td>
+
+                {/*Total With Additional*/}
+                <Td py={0}>
+                  <InputCurrency
+                    px={0}
+                    py={0}
+                    type="text"
+                    variant="unstyled"
+                    value={item.totalWithAdditional()}
                     class={inputCurrencyStyle()}
                     readonly
                   />
