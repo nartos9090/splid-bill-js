@@ -3,6 +3,7 @@ import {Button, Center, Input, Table, TableCaption, Tbody, Th, Thead, Tr, Td, cs
 import TableCurrencyInput from './TableCurrencyInput';
 import InputCurrency from './InputCurrency';
 import {inputCurrencyStyle} from '../styles/styles';
+import {Motion} from "@motionone/solid";
 
 export interface Item {
   name: Accessor<string>
@@ -27,7 +28,7 @@ interface ItemsProps {
 
 const [totalPrice, setTotalPrice] = createSignal<number>(0)
 const [items, setItems] = createSignal<Item[]>([], {equals: false})
-export { totalPrice, items}
+export {totalPrice, items}
 
 const ItemsForm: Component = (props: ItemsProps) => {
 
@@ -91,10 +92,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
         <Tbody>
           <For each={items()} fallback={<div>loading...</div>}>
             {(item, i) => (
-              <Tr>
+              <Motion.tr animate={{transform: ['scaleY(0)', 'scaleY(1)'], transformOrigin: 'left top'}}
+                         transition={{duration: 0.25, easing: "ease-in-out"}}
+              >
                 {/*Nomor*/}
                 <Td py={0}>
-                  {i()+1}
+                  {i() + 1}
                 </Td>
 
                 {/*Nama Barang*/}
@@ -187,7 +190,7 @@ const ItemsForm: Component = (props: ItemsProps) => {
                     readonly
                   />
                 </Td>
-              </Tr>
+              </Motion.tr>
             )}
           </For>
         </Tbody>
