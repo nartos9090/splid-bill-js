@@ -114,9 +114,9 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Harga*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <InputCurrency
-                    px={0}
+                    px={22}
                     py={0}
                     type="text"
                     variant="unstyled"
@@ -127,9 +127,9 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Jumlah*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <Input
-                    px={0}
+                    px={22}
                     py={0}
                     type="number"
                     variant="unstyled"
@@ -140,12 +140,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Total*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <InputCurrency
-                    px={0}
+                    px={22}
                     py={0}
                     type="text"
-                    variant="unstyled"
+                    variant="filled"
                     value={item.total()}
                     class={inputCurrencyStyle()}
                     readonly
@@ -153,12 +153,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Total With Additional*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <InputCurrency
-                    px={0}
+                    px={22}
                     py={0}
                     type="text"
-                    variant="unstyled"
+                    variant="filled"
                     value={item.totalWithAdditional()}
                     class={inputCurrencyStyle()}
                     readonly
@@ -166,12 +166,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Diskon*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <InputCurrency
-                    px={0}
+                    px={22}
                     py={0}
                     type="text"
-                    variant="unstyled"
+                    variant="filled"
                     value={item.discount}
                     class={inputCurrencyStyle()}
                     readonly
@@ -179,12 +179,12 @@ const ItemsForm: Component = (props: ItemsProps) => {
                 </Td>
 
                 {/*Harga Akhir*/}
-                <Td py={0}>
+                <Td py={0} px={0}>
                   <InputCurrency
-                    px={0}
+                    px={22}
                     py={0}
                     type="text"
-                    variant="unstyled"
+                    variant="filled"
                     value={item.finalPrice}
                     class={inputCurrencyStyle()}
                     readonly

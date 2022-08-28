@@ -4,19 +4,10 @@ import logo from './logo.svg';
 import styles from './App.module.css';
 import {
   Container,
-  Input,
-  Table,
-  TableCaption,
-  Tbody,
-  Td,
-  Tfoot,
-  Th,
-  Thead,
-  Tr,
-  css,
-  SimpleGrid,
   Box,
-  Button
+  Text,
+  Button,
+  Heading
 } from "@hope-ui/solid";
 import TableCurrencyInput from "../components/TableCurrencyInput";
 import MainForm, {price, setPrice, percentage} from '../components/MainForm';
@@ -42,14 +33,29 @@ const App: Component = () => {
 
   return (
     <>
-      <Container>
+      <Box style="position: fixed; top: 0; z-index: 1;" width="100%" background="#f0f0f0">
+        <Container px="$4" style="display: flex;">
+          <Heading size="5xl">
+            <span style={{color: '#27835d'}}>INFISI</span>BILL
+          </Heading>
+          <Text mt="auto" ml="$1">
+            Split your invisible <span style={{color: '#27835d'}}>bill</span>
+          </Text>
+        </Container>
+      </Box>
+      <Container p="$4" centered mt="48px">
         <ItemsForm />
-        <AdditionalForm />
-        <MainForm />
-        <Button onClick={() => calculateItemsAndAdditionalDiscount()}>
-          Generate
-        </Button>
+        <AdditionalForm/>
+        <MainForm/>
+        <Box width="100%" justifyContent="center" display="flex">
+          <Button onClick={() => calculateItemsAndAdditionalDiscount()}>
+            Generate
+          </Button>
+        </Box>
       </Container>
+      <Box style="position: fixed; bottom: 0; text-align: center;" width="100%" backgroundColor="#f0f0f0">
+        Made with &#9829; by INFINITE UNY
+      </Box>
     </>
   );
 };

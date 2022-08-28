@@ -84,6 +84,7 @@ const MainForm: Component = (props: MainProps) => {
               class={inputCurrencyStyle()}
               onInput={setDiscount}
               value={discount}
+              variant="filled"
               readonly
               text={discountText}
             />
